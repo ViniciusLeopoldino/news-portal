@@ -1,0 +1,152 @@
+# Passo 1: Criar o projeto Next.js
+npx create-next-app@latest news-portal --typescript
+
+# Navegar para o diretório do projeto
+cd news-portal
+
+# Instalar dependências adicionais
+npm install eslint prettier eslint-config-prettier eslint-plugin-prettier
+
+# Configurar ESLint e Prettier
+echo '{
+  "extends": ["next/core-web-vitals", "prettier"],
+  "plugins": ["prettier"],
+  "rules": {
+    "prettier/prettier": "error"
+  }
+}' > .eslintrc.json
+
+echo 'node_modules
+.next
+out
+' > .gitignore
+
+# Passo 2: Estrutura de pastas e arquivos
+mkdir -p components services types styles
+
+# Criar arquivos de componentes e serviços
+touch components/NewsItem.tsx components/Pagination.tsx components/Comments.tsx
+touch services/newsService.ts
+touch types/news.ts
+touch styles/globals.css styles/Home.module.css styles/News.module.css
+
+# Passo 3: Implementação do serviço de notícias
+echo 'export type Comment = {
+  name: string;
+  text: string;
+};
+
+export type News = {
+  id: number;
+  title: string;
+  date: string;
+  content: string;
+  image: string;
+  categories: string[];
+  comments: Comment[];
+};
+
+export const newsData: News[] = Array.from({ length: 50 }, (_, i) => ({
+  id: i + 1,
+  title: `Notícia ${i + 1}`,
+  date: new Date().toISOString(),
+  content: `Conteúdo da notícia ${i + 1}`.repeat(5),
+  image: `https://via.placeholder.com/150`,
+  categories: ["Categoria 1", "Categoria 2"],
+  comments: [{ name: "User", text: "Comentário" }]
+}));
+' > services/newsService.ts
+
+# Passo 4: Implementação da página inicial
+echo 'import { useState } from "react";
+import { newsData } from "../services/newsService";
+import NewsItem from "../components/NewsItem";
+import Pagination from "../components/Pagination";
+import styles from "../styles/Home.module.css";
+
+const Home = () => {
+  const [currentPage, setCurrentPage] = useState(1);
+  const [searchTerm, setSearchTerm] = useState("");
+
+  const filteredNews = newsData.filter(news =>
+    news.title.includes(searchTerm) ||
+    news.content.includes(searchTerm) ||
+    news.categories.some(category => category.includes(searchTerm))
+  );
+
+  const newsPerPage = 10;
+  const totalPages = Math.ceil(filteredNews.length / newsPerPage);
+  const displayedNews = filteredNews.slice(
+    (currentPage - 1) * newsPerPage,
+    currentPage * newsPerPage
+  );
+
+  return (
+    <div className={styles.container}>
+      <input
+        type="text"
+        placeholder="Buscar..."
+        value={searchTerm}
+        onChange={(e) => setSearchTerm(e.target.value)}
+      />
+      {displayedNews.length > 0 ? (
+        displayedNews.map(news => <NewsItem key={news.id} news={news} />)
+      ) : (
+        <p>Nenhum artigo encontrado</p>
+      )}
+      <Pagination
+        currentPage={currentPage}
+        totalPages={totalPages}
+        onPageChange={setCurrentPage}
+      />
+      {currentPage === totalPages && <p>Não há mais itens</p>}
+    </div>
+  );
+};
+
+export default Home;
+' > pages/index.tsx
+
+# Passo 5: Implementação da página de visualização da notícia
+echo 'import { GetServerSideProps } from "next";
+import { newsData, News } from "../services/newsService";
+import Comments from "../components/Comments";
+import styles from "../styles/News.module.css";
+
+type NewsPageProps = {
+  news: News | null;
+};
+
+const NewsPage = ({ news }: NewsPageProps) => {
+  if (!news) {
+    return <p>Notícia não encontrada</p>;
+  }
+
+  return (
+    <div className={styles.container}>
+      <h1>{news.title}</h1>
+      <p>{news.date}</p>
+      <img src={news.image} alt={news.title} />
+      <p>{news.content}</p>
+      <Comments comments={news.comments} />
+    </div>
+  );
+};
+
+export const getServerSideProps: GetServerSideProps = async (context) => {
+  const { id } = context.params!;
+  const news = newsData.find((news) => news.id === Number(id)) || null;
+
+  return {
+    props: {
+      news,
+    },
+  };
+};
+
+export default NewsPage;
+' > pages/[id].tsx
+
+# Passo 6: Deploy na Vercel
+# Subir o projeto no GitHub e fazer deploy na Vercel
+# Adicionar o link do deploy no README.md
