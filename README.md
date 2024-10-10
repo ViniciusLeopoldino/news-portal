@@ -1,36 +1,48 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# News Portal
 
-## Getting Started
+Bem-vindo ao projeto News Portal!
 
-First, run the development server:
+## Descrição
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+O News Portal é uma aplicação web que permite aos usuários ler e compartilhar notícias de diversas fontes. O objetivo é fornecer uma plataforma centralizada para acesso a notícias atualizadas e relevantes.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Funcionalidades
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+- Leitura de notícias de várias fontes
+- Compartilhamento de notícias nas redes sociais
+- Pesquisa de notícias por categoria e palavra-chave
+- Comentários e avaliações de notícias
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Tecnologias Utilizadas
 
-## Learn More
+- Frontend: HTML, CSS, JavaScript, React
+- Backend: Node.js, Express
+- Banco de Dados: MongoDB
 
-To learn more about Next.js, take a look at the following resources:
+## Instalação
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+1. Clone o repositório:
+    ```sh
+    git clone https://github.com/ViniciusLeopoldino/news-portal.git
+    ```
+2. Navegue até o diretório do projeto:
+    ```sh
+    cd news-portal
+    ```
+3. Instale as dependências:
+    ```sh
+    npm install
+    ```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Uso
 
-## Deploy on Vercel
+1. Inicie o servidor:
+    ```sh
+    npm start
+    ```
+2. Abra o navegador e acesse `http://localhost:3000`.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## Contribuição
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Contribuições são bem-vindas! Sinta-se à vontade para abrir issues e enviar pull requests.
+
